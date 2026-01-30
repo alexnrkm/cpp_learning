@@ -35,16 +35,15 @@ int main(){
     for (int i = 0; i < 3; i++){
         auto start_time = chrono::steady_clock::now();
         
-        int swap_count = 1;
-        while (swap_count != 0)
-        {
-            swap_count = 0;
-            for (int j{}; j < num_of_values - 1; j++){
-                if (names[i][j] > names[i][j+1]){
-                    swap(j, j+1, names[i], num_of_values);
-                    swap_count = swap_count + 1;
-                }
+        for (int j = 1; j < num_of_values; j++){
+            int key = names[i][j];
+            int k = j - 1;
+            
+            while (k >= 0 && names[i][k] > key){
+                names[i][k + 1] = names[i][k];
+                k--;
             }
+            names[i][k + 1] = key;
         }
         
         auto end_time = chrono::steady_clock::now();
@@ -57,15 +56,4 @@ int main(){
     delete[] worst_case_array;
 
     return 0;
-}
-
-void swap(int a, int b, int *array, int size){
-    if (a >= size || b >= size){
-        cout << "index cannot be more than size of the array";
-        return;
-    }
-
-    int a_copy = array[a];
-    array[a] = array[b];
-    array[b] = a_copy;
 }

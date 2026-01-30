@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <cstdlib>
+#include <string>
 
 using namespace std;
 
@@ -18,24 +19,34 @@ int main(){
         srand(chrono::system_clock::now().time_since_epoch().count()); // устанавливает разный сид для rand
         array[i] = rand() % (i + 4); // генерирует случайное число между 0 и i+3;
     }
-    cout << "The random array is generated" << endl << endl;
 
-    auto start_time = chrono::steady_clock::now(); // measuring the start of the algorithm
-
-    cout << "sorting the array..." << endl;
-    int s_num;
+    int *sorted_array = new int[num_of_values];
     for (int i{}; i < num_of_values; i++){
-        s_num = find_smallest_index(array, num_of_values);
-        swap(s_num, i, array, num_of_values);
+        sorted_array[i] = i;
     }
-    auto end_time = chrono::steady_clock::now();
 
-    cout << endl << "The array is sorted" << endl;
+    int *worst_case_array = new int[num_of_values];
+    for (int i{}; i < num_of_values; i++){
+        sorted_array[i] = num_of_values - i;
+    }
 
-    auto time_elapsed = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
-    cout << endl << "time elapsed: " << time_elapsed.count() << " miliseconds";
+    string array_names[3] = {"random_array", "sorted_array", "worst_case_array"};
+    int *names[3] = {array, sorted_array, worst_case_array};
 
-    delete[] array; //освободить память
+    for (int i = 0; i < 3; i++){
+        auto start_time = chrono::steady_clock::now(); // measuring the start of the algorithm
+        int s_num;
+        for (int j{}; j < num_of_values; j++){
+            s_num = find_smallest_index(names[i], num_of_values);
+            swap(s_num, j, names[i], num_of_values);
+        }
+        auto end_time = chrono::steady_clock::now();
+        auto time_elapsed = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
+        cout << endl << array_names[i] << " time elapsed: " << time_elapsed.count() << " miliseconds" << endl;
+    }
+
+    delete[] array, sorted_array, worst_case_array; //освободить память
+
     return 0;
 }
 
