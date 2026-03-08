@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+int gcdRec(int a, int b) {
+    if (b == 0) return a < 0 ? -a : a;
+    return gcdRec(b, a % b);
+}
+
+int lcmRec(int a, int b) {
+    if (a == 0 || b == 0) return 0;
+    int g = gcdRec(a, b);
+    int ans = (a / g) * b;
+    return ans < 0 ? -ans : ans;
+}
+
+int main() {
+    int a, b;
+    cout << "Enter first number: ";
+    cin >> a;
+    cout << "Enter second number: ";
+    cin >> b;
+    cout << "LCM = " << lcmRec(a, b);
+    return 0;
+}
