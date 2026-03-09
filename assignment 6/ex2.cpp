@@ -8,8 +8,9 @@ long long fibonacci(int n) {
 
 int main() {
     int n;
-    cout << "Enter n: ";
+    cout << "Enter n for fibonacci: ";
     cin >> n;
     cout << "Fibonacci = " << fibonacci(n);
     return 0;
 }
+ 
